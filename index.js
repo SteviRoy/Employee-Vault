@@ -161,3 +161,56 @@ function addRolePrompt() {
     })
     .catch(err => console.log(err));
 }
+
+// Function to prompt the user for a new employee and add it to the database
+function addEmployeePrompt() {
+  // Retrieve all roles and employees from the database simultaneously using Promise.all()
+  Promise.all([
+    getAllRoles(),
+    getAllEmployees()
+  ])
+    .then(([roles, employees]) => {
+      // Create an array of role choices for the user to select from
+      const roleChoices = roles[0].map(row => ({ name: row.title, value: row.id }));
+      // Create an array of manager choices for the user to select from, including an option for "None"
+      const managerChoices = employees[0].map(row => ({ name: `${row.first_name} ${row.last_name}`, value: row.id }));
+      managerChoices.unshift({ name: 'None', value: null });
+      // Prompt the user for a new employee's first name, last name, role, and manager
+      inquirer
+        .prompt([
+          {
+            type: 'input',
+            name: 'firstName',
+            message: "What is the employee's first name?"
+          },
+          {
+            type: 'input',
+            name: 'lastName',
+            message: "What is the employee's last name?"
+          },
+          {
+            type: 'list',
+            name: 'roleId',
+            message: "What is the employee's role?",
+            choices: roleChoices
+          },
+          {
+            type: 'list',
+            name: 'managerId',
+            message: "Who is the employee's manager?",
+            choices: managerChoices
+          }
+        ])
+        .then(({ firstName, lastName, roleId, managerId }) => {
+          // Call the addEmployee() function from the query module to add the new employee to the database
+          addEmployee(firstName, lastName, roleId, managerId)
+            .then(() => {
+              console.log(`Added ${firstName} ${lastName} to the database`);
+              // Call startApp() to prompt the user with the main menu again
+              startApp();
+            })
+            .catch(err => console.log(err));
+        });
+    })
+    .catch(err => console.log(err));
+}
