@@ -1,0 +1,20 @@
+{
+  "name": "employee-vault",
+  "version": "1.0.0",
+  "description": "Employee Vault is an employee database management app designed to help business owners view and manage departments, roles, and employees in their company, all in one place.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Stevi P. Roy",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "mysql2": "^2.1.0"
+  }
+}
