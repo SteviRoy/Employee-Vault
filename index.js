@@ -99,3 +99,24 @@ function viewEmployees() {
     })
     .catch(err => console.log(err));
 }
+// Function to prompt the user for a new department name and add it to the database
+function addDepartmentPrompt() {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the department?'
+      }
+    ])
+    .then(({ name }) => {
+      // Call the addDepartment() function from the query module to add the new department to the database
+      addDepartment(name)
+        .then(() => {
+          console.log(`Added ${name} department to the database`);
+          // Call startApp() to prompt the user with the main menu again
+          startApp();
+        })
+        .catch(err => console.log(err));
+    });
+}
