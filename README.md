@@ -23,7 +23,8 @@ Clone the repository from GitHub. Navigate to the project directory in your term
 ## Usage
 
 Start the application by running `node index.js` in the terminal. Follow the prompts to view, add, or update departments, roles, or employees in your company. Use arrow keys to navigate the menu and make selections. Press Enter to confirm your choices.
-
+Walkthrough video just in case:
+https://drive.google.com/file/d/1eKsF84P0FXDkzrdknx61anRI10cJ24XH/view
 ## Contributions
 
 Contributions are welcome. To contribute, fork the repository and submit a pull request with your changes. Please ensure that your code adheres to the project's style guide and passes all tests.
