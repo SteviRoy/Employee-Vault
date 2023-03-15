@@ -67,3 +67,35 @@ function startApp() {
       }
     })
 }
+// Function to retrieve all departments from the database and display them in a table
+function viewDepartments() {
+  getAllDepartments()
+    .then(([rows]) => {
+      console.table(rows);
+      // Call startApp() to prompt the user with the main menu again
+      startApp();
+    })
+    .catch(err => console.log(err));
+}
+
+// Function to retrieve all roles from the database and display them in a table
+function viewRoles() {
+  getAllRoles()
+    .then(([rows]) => {
+      console.table(rows);
+      // Call startApp() to prompt the user with the main menu again
+      startApp();
+    })
+    .catch(err => console.log(err));
+}
+
+// Function to retrieve all employees from the database and display them in a table
+function viewEmployees() {
+  getAllEmployees()
+    .then(([rows]) => {
+      console.table(rows);
+      // Call startApp() to prompt the user with the main menu again
+      startApp();
+    })
+    .catch(err => console.log(err));
+}
