@@ -214,3 +214,47 @@ function addEmployeePrompt() {
     })
     .catch(err => console.log(err));
 }
+// Function to prompt the user to update an employee's role and update it in the database
+function updateEmployeeRolePrompt() {
+  // Retrieve all employees and roles from the database simultaneously using Promise.all()
+  Promise.all([
+    getAllEmployees(),
+    getAllRoles()
+  ])
+    .then(([employees, roles]) => {
+      // Create an array of employee choices for the user to select from
+      const employeeChoices = employees[0].map(row => ({ name: `${row.first_name} ${row.last_name}`, value: row.id }));
+      // Create an array of role choices for the user to select from
+      const roleChoices = roles[0].map(row => ({ name: row.title, value: row.id }));
+      // Prompt the user to select an employee and a new role
+      inquirer
+        .prompt([
+          {
+            type: 'list',
+            name: 'employeeId',
+            message: 'Which employee do you want to update?',
+            choices: employeeChoices
+          },
+          {
+            type: 'list',
+            name: 'roleId',
+            message: "What is the employee's new role?",
+            choices: roleChoices
+          }
+        ])
+        .then(({ employeeId, roleId }) => {
+          // Call the updateEmployeeRole() function from the query module to update the employee's role in the database
+          updateEmployeeRole(employeeId, roleId)
+            .then(() => {
+              console.log('Updated employee role in the database');
+              // Call startApp() to prompt the user with the main menu again
+              startApp();
+            })
+            .catch(err => console.log(err));
+        });
+    })
+    .catch(err => console.log(err));
+}
+
+// Call the startApp() function to begin the application
+startApp();
