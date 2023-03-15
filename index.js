@@ -120,3 +120,44 @@ function addDepartmentPrompt() {
         .catch(err => console.log(err));
     });
 }
+
+// Function to prompt the user for a new role and add it to the database
+function addRolePrompt() {
+  // Retrieve all departments from the database
+  getAllDepartments()
+    .then(([rows]) => {
+      // Create an array of department choices for the user to select from
+      const choices = rows.map(row => ({ name: row.name, value: row.id }));
+      // Prompt the user for a new role name, salary, and department
+      inquirer
+        .prompt([
+          {
+            type: 'input',
+            name: 'title',
+            message: 'What is the name of the role?'
+          },
+          {
+            type: 'input',
+            name: 'salary',
+            message: 'What is the salary for the role?'
+          },
+          {
+            type: 'list',
+            name: 'departmentId',
+            message: 'Which department does the role belong to?',
+            choices: choices
+          }
+        ])
+        .then(({ title, salary, departmentId }) => {
+          // Call the addRole() function from the query module to add the new role to the database
+          addRole(title, salary, departmentId)
+            .then(() => {
+              console.log(`Added ${title} role to the database`);
+              // Call startApp() to prompt the user with the main menu again
+              startApp();
+            })
+            .catch(err => console.log(err));
+        });
+    })
+    .catch(err => console.log(err));
+}
